@@ -1,4 +1,5 @@
-﻿<frameset(resources-view) cols="1*,3*" .resources-view >
+﻿<!-- <frameset(resources-view) cols="1*,3*" .resources-view > -->
+<frameset(resources-view) cols="200dip,*dip" .resources-view >
   <div .resource-list .panel>
     <section .collapsible .resurces-markup restype=0 >
       <header.treed>markup</header>
@@ -35,7 +36,7 @@
         <label>#</label><input|integer #do-goto-line novalue="{go to line}"/>
         <label>?</label><input|text #do-search-text novalue="{search}" />
       </div>
-      <plaintext.source-code readonly type="text/html"/>
+      <plaintext.source-code type="text/html"/>
     </div>
     <div .image-view >
       <picture />

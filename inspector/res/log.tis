@@ -1,6 +1,5 @@
 ﻿include "settings.tis";
 include "value-view.tis";
-
 class Log: Behavior 
 {
   const MAX_ITEMS = 500;
@@ -19,8 +18,8 @@ class Log: Behavior
 
   function attached() 
   {
-    //this.driver = this.$p(.view-driver);
-  
+    this.driver = this.$p(.view-driver);
+    
     function crackText(text)
     {
       text = text.replace("\t","    ").htmlEscape();
@@ -85,7 +84,7 @@ class Log: Behavior
     }
     
     this.clearMsgs = function() {
-      var ed = this.last.detach(); 
+      var ed = this.last.detach();
       this.clear(); 
       this.append(ed);
       lastMsg = null;
@@ -108,16 +107,19 @@ class Log: Behavior
   }
   
   event click $(a[href][line]) (evt, target)
-  { 
+  {
     var data = {
       url : target.attributes["href"],
       lineNo : target.attributes["line"].toInteger()
     };
+    if (evt.shortcutKey) {
+      this.post(:: System.exec("code", "-g", URL.toPath(data.url) + ":" + data.lineNo));
+    }
     var option = target.$p(option);
     var vid = option.vid;
     var views = $(#views);
     //stdout.println("a[href][line]", option, vid, views, data.url, data.lineNo);
-    for( var driver in views.$$(.view-driver))
+    for( var driver in views.$$(.view-driver) )
     {
       if( driver.vid == vid ) 
       {
@@ -142,7 +144,7 @@ class Log: Behavior
 	  return true;
   }
   
-  event ~contextmenu $(input.eval)  (evt)
+  event ~contextmenu $(input.eval) (evt)
   {
     var menu = $(menu#for-input-eval);
     if(!mruListValid) {
@@ -174,9 +176,9 @@ class Log: Behavior
       mruList.pop();
     mruListValid = false;
   }
-  
-  
+  var ind = 0;
   event ~keydown $(input.eval) (evt, input) {
+    ind = mruList.indexOf(input.value);
     if(evt.keyCode == Event.VK_RETURN) {
       var text = input.value.trim();
       if( text ) {
@@ -185,9 +187,14 @@ class Log: Behavior
         this.updateMru(text);
         return true;
       }
+    } else if (evt.keyCode == Event.VK_UP && evt.shortcutKey) {
+      --ind;
+      input.value = mruList[ind];
+    } else if (evt.keyCode == Event.VK_DOWN && evt.shortcutKey) {
+      ++ind;
+      input.value = mruList[ind];
     }
   }
-  
   event click $(menu#for-input-eval > li[command=paste-code]) (evt, menuItem) {
     var input = this.$(input.eval);
     input.value = menuItem.$(code).text;

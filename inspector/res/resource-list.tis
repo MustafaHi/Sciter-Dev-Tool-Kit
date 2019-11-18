@@ -45,9 +45,9 @@ class ResourceList: Element {
         list.clear();
         list.parent.attributes.addClass("no-items");
       }
-      
+    this.othersList.clear();
     const URL_PARTS = /^([^:]+:)(.+\/)*([^.]+)(.+)$/;
-    
+
     for( var (url,res) in this.driver.resources ) 
     {
       var list = this.sections[res.type || Request.DATA_HTML];
@@ -57,7 +57,7 @@ class ResourceList: Element {
         list.$append(<li res="{res.url}">{res.url}</li>);
       else if( !urlparts[2] ) // non-hierarchical    
         list.$append(<li res="{res.url}"><span.prot>{urlparts[1]}</span><span.file>{urlparts[3]}</span><span.ext>{urlparts[4]}</span></li>);
-      else
+      else if (urlparts[2] !== "//app/")
         list.$append(<li res="{res.url}"><span.prot>{urlparts[1]}</span><span.path>{urlparts[2]}</span><span.file>{urlparts[3]}</span><span.ext>{urlparts[4]}</span></li>);
       list.parent.attributes.removeClass("no-items");
     }

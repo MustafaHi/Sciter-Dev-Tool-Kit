@@ -47,7 +47,7 @@ Settings.add {
   store: function(data) 
     {
        var (x,y,w,h) = view.box(#rectw,#border,#screen);
-       data.window = {left:x,top:y,width:w,height:h};  
+       data.window = {left:x,top:y,width:w,height:h};
     },
   restore: function(data) 
     {
@@ -55,14 +55,14 @@ Settings.add {
          view.move(
            Integer.max(data.window.left,0),
            Integer.max(data.window.top,0),
-           Integer.max(data.window.width,400),
+           Integer.max(data.window.width,600),
            Integer.max(data.window.height,400)); 
     }
 };
   
 function saveState()
 {
-  self.timer(4s,Settings.store);
+  self.timer(1s,Settings.store);
 }
 
 view.on("move",saveState)

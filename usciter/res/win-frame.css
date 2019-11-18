@@ -8,11 +8,11 @@ html:owns-focus {
   border-color: morph(color(accent-color), opacity:50%);   
 }
 
-html > header { width:*; /*background-color: color(back-color);*/ }
+/* html > header { width:*; background-color: color(back-color); } */
 
 html > header { width:*; flow:horizontal; height:window-caption-height; margin:0; } 
 html > header > window-caption { display:block; line-height:window-caption-height; width:*; padding:0 1em; color:color(text-color); }
-html > header > window-buttons { display:block; flow:horizontal; width:max-content; height:2em; }
+html > header > window-buttons { display:block; flow:horizontal; width:max-content; height:*; }
 html > header > window-buttons > window-button { 
   behavior:clickable; 
   display:block; 
@@ -26,7 +26,7 @@ html > header > window-buttons > window-button {
 }
 html > header > window-buttons > window-button:hover { 
   background:rgba(0,0,0,0.25); 
-  transition: background-color(linear,100ms);
+  transition: background-color(linear,50ms);
 }
 html > header > window-buttons > window-button[role="window-close"] { stroke-width:1.44dip; foreground-image: url(path:M0 0 L10 10 M10 0 L0 10); }
 html > header > window-buttons > window-button[role="window-close"]:hover { background:rgb(232,17,35); stroke:#fff; }

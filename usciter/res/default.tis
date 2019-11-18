@@ -19,10 +19,11 @@ var debugIsActive = false;
 
 function loadFile(fn)
 {
+  view.trayIcon(#remove);
   filename = fn;
   content.load(fn);
   $(button#reload).state.disabled = false;
-  inspectorButton.state.disabled = false;
+  inspectorButton.state.disabled  = false;
   if(debugIsActive)
     view.launchDebugView();
   var croot = content[0];
@@ -30,9 +31,15 @@ function loadFile(fn)
   // testing nativeApi:
   var rootUid =  native.getElementUid(croot);
   if( title )
-    view.caption =  String.printf("Sciter(%d):%s", rootUid, title.text || ""); 
+    view.caption =  String.printf("SDTK(%d):%s", rootUid, title.text || ""); 
   else 
-    view.caption =  String.printf("Sciter(%d)",rootUid); 
+    view.caption =  String.printf("SDTK(%d)",rootUid);
+
+  if (URL.parse(fn).name != "/sys-info") {
+    Setting.data.history.removeByValue({title: title.text, path: URL.toPath(fn)});
+    Setting.data.history.unshift({title: title.text, path: URL.toPath(fn)});
+    if (Setting.data.history.length > 5) { Setting.data.history.pop(); }
+  }
 }
 
 event click $(button#open)
@@ -66,94 +73,33 @@ event click $(button#open-in-view)
   }
 }
 
-function setTheme(lightAmbience, blurbehind) {
-  var bg = $(button#glass);
-  if( lightAmbience ) {
-    view.windowBlurbehind = blurbehind ? #light : #none;
-    self.attributes["theme"] = "light";
-    bg.state.checked = true;
-  }
-  else {
-    view.windowBlurbehind = blurbehind ? #dark : #none;
-    self.attributes["theme"] = "dark";
-    bg.state.checked = false;
-  }
-}
-
-function onMediaChange() {
-  var blurbehind = view.mediaVar("ui-blurbehind"); // WM is blurbehind capable and uses it now
-  var lightAmbience = view.mediaVar("ui-ambience") == "light"; // WM uses light theme
-  setTheme(lightAmbience, blurbehind);
-}
-
-function setSystemGlass(onOff) {
-  var bg = $(button#glass);
-  var sbg = $(button#system-glass);
-  if(onOff) {
-    onMediaChange();
-    bg.state.disabled = true; 
-    sbg.state.checked = true;
-    view.on("mediachange", onMediaChange);
-  } else {
-    bg.state.disabled = false; 
-    sbg.state.checked = false;
-    view.off(onMediaChange);
-  }
-}
-
-event click $(button#system-glass)
-{
-  setSystemGlass(this.value);
-  saveState();
-}
-
-event click $(button#glass)
-{
-  setTheme(this.value, true);
-  saveState();
-}
-
-Settings.add 
-{
-  store: function(data) 
-    {
-      data.glass = {
-        useSystem : $(button#system-glass).state.checked;  
-        lightTheme : $(button#glass).state.checked; 
-      };
-    },
-  restore: function(data) 
-    {
-      if(data.glass) {
-        setSystemGlass(data.glass.useSystem);
-        if( !data.glass.useSystem ) {
-          var lightAmbience = data.glass.lightTheme;
-          setTheme(lightAmbience, view.mediaVar("ui-blurbehind"));
-        }
-      }
-    }
-};
-
-
 event click $(button#help)
 {
   var path = System.home("../doc/main.htm");
   if(!System.scanFiles(path))
     path = System.home("../../doc/main.htm");
   if(!System.scanFiles(path)) {
-    view.msgbox(#alert, path + " not found");
+    view.msgbox(#alert, "docs not found, \n Copy the doc folder from sciter-sdk and paste it inside the SDKT folder.");
     return true;
   }
 
   view.window 
   {
     url: URL.fromPath(path),
-    type: View.FRAME_WINDOW,
     state: View.WINDOW_SHOWN,
     alignment:5,
     width: 1024,
     height: 800
   };
+}
+
+var pinned = 0;
+event click $(button#pin) {
+  if(pinned==0) { pinned = 1; view.windowTopmost = true; $(#pin).style#fill = "#fff"; }
+  else          { pinned = 0; view.windowTopmost =false; $(#pin).style#fill = "#777"; }
+}
+event click $(button#home) {
+  loadFile(self.url("sys-info.htm"));
 }
 
 DropZone.call(content,"*.htm;*.html;*.xhtml;*.svg"); 
@@ -202,17 +148,16 @@ event click $(button#inspector)
     const SUFFIX = { Windows: ".exe", OSX: ".app" };
 
     var inspectorPath = System.home("inspector" + (SUFFIX[System.PLATFORM] || ""));
-    
+    // var inspectorPath = System.home("inspector.exe.lnk");
     if( !System.scanFiles(inspectorPath) ) {
       view.msgbox(#alert, "Cannot find " + inspectorPath);
       return;
     }
     Sciter.launch(inspectorPath);
     self.timer(300ms, function() { connectToInspector($(frame#content)) });
-    
   }
 }
 
 function self.ready() {
-  Settings.restore();
+  Setting.load();
 }

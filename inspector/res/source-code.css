@@ -11,7 +11,7 @@
     line-height: 16dip;
     font-family: monaco, consolas, monospace;
     font-rendering-mode: snap-pixel;
-    overflow:scroll-indicator; /* scroll-manner(wheel-animation:false, page-animation:false, step-animation:false, home-animation:false); */
+    overflow:auto; /*scroll-indicator scroll-manner(wheel-animation:false, page-animation:false, step-animation:false, home-animation:false); */
     background:#eee;
     size:*;
     tab-size:4;

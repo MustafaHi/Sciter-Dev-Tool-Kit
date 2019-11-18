@@ -1,11 +1,10 @@
 ﻿<html resizeable>
   <head>
-    <title>Sciter's Inspector</title>
+    <title>SDTK's Inspector</title>
     <style>
       @import url(facade.css);
     </style>
     <script type="text/tiscript">
-    
       namespace RESOURCE_TYPE
       {
         const HTML  = 0;
@@ -40,11 +39,10 @@
             break;
           }
       });
-      
       self.on("connected", function(evt) { $(main).attributes["state"] = "views"; });
-      self.on("disconnected", function(evt) { if( ! $(#views).hasTabs ) $(main).attributes["state"] = "intro"; } );
+      self.on("disconnected", function(evt) { if( ! $(#views).hasTabs ) { $(main).attributes["state"] = "intro"; view.close(); } } );
 
-      view.caption = "Sciter's Inspector";
+      view.caption = "SDTK's Inspector";
     </script>
     
     <menu.context #for-log-list>
@@ -68,19 +66,18 @@
       <li.code command="paste-code"><code>this.style#display = "none";</code></li>
       <hr/>
     </menu>
- 
     
   </head>
 <body>
   <main state="intro">
     <section #intro><include src="intro.htm"/></section>
-    <frameset rows="2*,*" >
+    <frameset rows="3*,*">
       <tabs.aside #views></tabs>
       <splitter/>
       <select|list .log.list.panel multiple>
-        <input|text.eval novalue="this - selected element" />
+        <input|text.eval #commandline novalue="this - selected element"/>
       </select>
-    </frameset>      
+    </frameset>
   </main>
 </body>
 </html>

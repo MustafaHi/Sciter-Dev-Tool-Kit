@@ -55,7 +55,7 @@ class ViewDriver: Element
       const method = ViewDriver[data.shift()];
       assert(typeof method == #function);
       method.apply(me, data );
-      //socket.send(data);
+      // socket.send(data);
     });
     socket.on("close",function() {
       me.active = false;
@@ -102,6 +102,9 @@ class ViewDriver: Element
       url : target.attributes["href"],
       lineNo : target.attributes["line"].toInteger()
     };
+    if (evt.shortcutKey) {
+      this.post(:: System.exec("code", "-g", URL.toPath(data.url) + ":" + data.lineNo));
+    }
     this.postEvent("navigate-to-source", data);
     return true;
   }
@@ -129,17 +132,15 @@ class ViewDriver: Element
       this.label.$(text).text = title; 
       //log.clearMsgs();
   }
-  function deeDetach() { views.postEvent("disconnected"); views.removeTab(this.vid);  }
+  function deeDetach() { views.postEvent("disconnected"); views.removeTab(this.vid); }
   function deeReattach( title, url = "?", snapshot = null )  { 
     this.deeUrl = url;
-    this.label.$(text).text = title;
+    this.label.$(text).text = title; // fails to get title after refresh
     log.clearMsgs();
-    this.resources = {};    
-    if(var res = this.resources[url]) {
-      this.resources[url] = res;
-    }
-    this.postEvent("connected");     
-    this.postEvent("resource-arrived"); 
+    this.resources = {};
+    if(var res = this.resources[url]) { this.resources[url] = res; } // never called
+    this.postEvent("connected");
+    this.postEvent("resource-arrived");
     //stdout.printf("deeReattach %V\n", url);
   }
     

@@ -1,77 +1,39 @@
-
-// persistable settings:
-namespace Settings
-{
-  const path = System.path(#USER_APPDATA, APP_NAME + ".json");
-  var   list = []; // list of persistable objects
-
-  function store() 
-  {
-    var stream = Stream.openFile(path,"uw");
-  
-    if( !stream )
-    {
-      view.msgbox(#warning, "Cannot open file "+ path +" for writing. Settings will not be saved." );
-      return;
-    }
-  
-    var data = {};
-    for(var persistable in list)
-      persistable.store(data);
-
-    stream.printf("%V\n",data);
-    //stdout.printf("%V\n",data);
-    stream.close();
+function initFiles(force = 0) {
+  const path = System.path(#USER_APPDATA, "SDTK.json");
+  if (!System.scanFiles(path) || force == 1) {
+      var sett = {
+          window : {left:"100",top:"100",width:"800",height:"600"},
+          history: []
+      };
+      var intie = Stream.openFile(path, "wu");
+      intie.printf("%s", JSON.stringify(sett, ""));
+      intie.close();
+  }
+}
+initFiles();
+namespace Setting {
+  const path = System.path(#USER_APPDATA, "SDTK.json");
+  var data;
+  function load() {
+    var file = Stream.openFile(path, "ru");
+    data = parseData(file);
+    file.close();
+    if (!data) { initeFiles(1); return; }
+    var x = Integer.max(data.window.left,0);
+    var y = Integer.max(data.window.top,0);
+    var w = Integer.max(data.window.width,600);
+    var h = Integer.max(data.window.height,600);
+    view.move(x,y);
+    view.move(x,y,w,h);
   }
 
-  function restore() 
-  {
-    //stdout.printf("restoring\n");
-    var stream = Stream.openFile(path,"ur");
-    if( !stream )
-      return false;
-    var data = null;
-    try      { data = parseData( stream ); }
-    catch(e) { stdout.printf("Restore error %s\n",e); }
-    finally { stream.close(); }
-    if(data) for(var persistable in list)
-                persistable.restore(data);
+  function save() {
+    var (x,y,w,h) = view.box(#rectw,#border,#screen);
+    data.window = {left:x,top:y,width:w,height:h};
+    if(var s = Stream.openFile(path, "wu")) { s.printf("%V", data); s.close(); }
   }
-
-  function add(persistable) { list.push(persistable); }
 }
 
-// window position persistence
-Settings.add {
-  store: function(data) 
-    {
-       var (x,y,w,h) = view.box(#rectw,#border,#screen);
-       data.window = {left:x,top:y,width:w,height:h};  
-    },
-  restore: function(data) 
-    {
-      if( data.window ) {
-        var x = Integer.max(data.window.left,0);
-        var y = Integer.max(data.window.top,0);
-        var w = Integer.max(data.window.width,800);
-        var h = Integer.max(data.window.height,600); 
-
-        view.move(x,y); // move to monitor 
-        view.move(x,y,w,h); // replace on monitor
-      }
-    }
-};
-  
-function saveState()
-{
-  if(!self.view) {
-    view.off(saveState);
-    return;
-  }
-  self.timer(1s,Settings.store);
+view.root << event closerequest (evt) {
+  Setting.save();
 }
-
-view.on("move",saveState)
-    .on("size",saveState);
-
-

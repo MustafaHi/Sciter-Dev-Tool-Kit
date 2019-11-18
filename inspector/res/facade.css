@@ -94,14 +94,16 @@ body > footer > label > kbd {
   background: @WINDOW-BACK-COLOR;
   color: @WINDOW-TEXT-COLOR;
   border:none;
-  overflow-y:scroll-indicator; 
-  overflow-x:scroll-indicator; 
+  /* overflow-y:scroll-indicator; */
+  /* overflow-x:scroll-indicator; */
+  /* overflow: auto; */
+  overflow:auto scroll-manner( animation:true );
 }
 
-frameset[cols] > splitter { width:1dip; hit-margin:0 2dip; background:#ccc; }
+frameset[cols] > splitter { width:2dip; hit-margin:0 2dip; background:#ccc; }
 frameset[cols] > splitter:hover { background:#4d4d4d; }
 
-frameset[rows] > splitter { width:*; height:2dip; background:#fff; border-top:1dip solid #ccc; }
+frameset[rows] > splitter { width:*; height:2dip; background:#fff; border-top:2dip solid #ccc; }
 frameset[rows] > splitter:hover { border-color:#4d4d4d; }
 
 /* collapsible sections */
@@ -113,14 +115,14 @@ section.collapsible > header
   behavior:clickable;
   foreground-image:url(stock:arrow-right); /* that arrow */
   foreground-repeat: no-repeat;
-  foreground-position: 5dip 50%;
+  foreground-position: 8dip 50%; /* 9dip 50% semantic */
   foreground-size: 5dip 9dip;
-  padding-left:20dip;
   background: @PANEL-HEADER-BACK-COLOR;
   line-height: 1.6em; 
   cursor:pointer;
+  padding: 4dip 20dip;
 }
-section.collapsible:expanded > header     { foreground-size: 9dip 5dip; foreground-image:url(stock:arrow-down); /* that arrow */; background: @PANEL-HEADER-BACK-COLOR-EXPANDED;  }
+section.collapsible:expanded > header     { foreground-position: 5dip 50%; foreground-size: 9dip 5dip; foreground-image:url(stock:arrow-down); /* that arrow */; background: @PANEL-HEADER-BACK-COLOR-EXPANDED;  }
 section.collapsible > text.no-items      
 { 
   visibility:none; 
@@ -139,7 +141,7 @@ tabs#views { size:*; }
 tabs#views > labels                   { width:64dip; padding:0; border-spacing:1dip; border-right:1dip solid #ccc; }
 tabs#views > labels > label           { height:76dip; overflow:hidden; border-bottom:1dip solid #ccc; background:#eee; color:#000; }
 tabs#views > labels > label > text    { font-size:10dip; line-height:12dip;  white-space:nowrap; overflow-x:hidden; text-overflow:ellipsis; text-align:center;}
-tabs#views > labels > label > picture { size:64dip; foreground-repeat:no-repeat; foreground-position:50% 50%;  }
+tabs#views > labels > label > picture { size:64dip; foreground-repeat:no-repeat; foreground-position:50% 50%; image-rendering: optimize-speed;  }
 
 tabs#views > labels > label:hover   { background:@PILL-BACK-COLOR-HOVER; color: @PILL-COLOR-HOVER; }
 tabs#views > labels > label:current { background:@PILL-BACK-COLOR-ACTIVE; color: @PILL-COLOR-ACTIVE; }
@@ -217,7 +219,9 @@ select.log {
   prototype: Log url(log.tis);  
   display:block; 
   padding:0; 
-  overflow-x:scroll-indicator; 
+  padding-bottom: 26dip;
+  /* overflow-x:scroll-indicator;  */
+  overflow-x: auto;
   context-menu: selector(menu#for-log-list);
   background:#fff;
   width:*;  
@@ -260,19 +264,23 @@ select.log > option:current  { padding-left: 18dip; border-left-width:7dip; /*co
 select.log > option var { display:inline-block; background:#f44; color:#fff; border-radius:0.4em; padding:0 0.5em; margin-right:4dip; } /* repeat counter */
 select.log > option.current-view { border-right-color: highlight; }
 
-select.log > input  { 
+#commandline  { 
   display:block;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
   context-menu: selector(menu#for-input-eval);  
   background-repeat: no-repeat;  
   background-image: url(images/log-arrow-right.png);
   background-size: 9dip;
-  background-position: 9dip 50%;
-  padding: 4dip 1dip 4dip 25dip;
+  background-position: 9dip 54%;
+  padding: 5dip 1dip 5dip 25dip;
   line-height: 1.3em;
   white-space :pre;
   font-family:monospace;
   border:none;
-  border-bottom: 1dip solid #eee;
+  border-top: 1dip solid #eee;
   border-radius: 0;
   width:*;
 }
@@ -336,7 +344,7 @@ option.debug span.log.warning { background: #FFD700; color:#000;}
   margin:0; padding:0 0.5em 0 0;
 }
 
-select.log > input:empty { color:#ccc; }
+input:empty { color:#ccc; }
 
 /* menu for select.log > input */
 
@@ -367,15 +375,20 @@ select.dom-tree option:expanded > text > span.text { visibility:none; }
 /* element details */
 widget.element-details {
   prototype: ElementDetails url(dom-element-details.tis);
+  vertical-scrollbar: my-v-scrollbar;
   overflow-x:none; 
 }
+widget.element-details section span { display:inline-block; padding: 0 3dip; }
+widget.element-details section [style]:hover { background: #000; }
+/* widget.element-details section [style]:hover { background: #F16; } */
+/* widget.element-details section [style]:hover { background: #bad2ec; } */
 widget.element-details > section > dl
 {
   visibility:none;
   margin:0;
   padding:0;
-  //background:window;
-  background: @WINDOW-BACK-COLOR;
+  background:window;
+  /* background: @WINDOW-BACK-COLOR; */
   color: @WINDOW-TEXT-COLOR;
   flow:row(dt,dd);
   border-bottom:@PANEL-BORDER;
@@ -387,9 +400,9 @@ widget.element-details > section:expanded > dl > header
   background-color:inactivecaption;
   border-bottom:1px solid activecaption;
   padding: 4dip;
-  //white-space:nowrap;
+  /* white-space:nowrap; */
   flow:horizontal;
-  //overflow-x:hidden;
+  /* overflow-x:hidden; */
 }
 widget.element-details > section:expanded > dl > header > span.selector 
 {
@@ -413,14 +426,14 @@ widget.element-details > section:expanded > dl > dt
   white-space:nowrap;
   overflow-x: hidden;
   text-overflow: ellipsis;
-  text-align:right;
+  /* text-align:right; */
   margin:0;
   padding:2dip 3dip;
   border-right:1px solid threedlight;
 }
 widget.element-details > section:expanded > dl > dd 
 {
-  width:2*;
+  width:1.25*;
   margin:0;
   padding:2dip 3dip;
   font-weight:bold;
@@ -446,7 +459,7 @@ widget.element-details > section:expanded > dl > dd
   size:*;
   /*border-top:1px dashed silver;
   margin-top:2px;
-  overflow:none;*/
+  overflow:none; */
 }
 .source-view .source-code-toolbar {
   background: #fff;
@@ -458,7 +471,8 @@ widget.element-details > section:expanded > dl > dd
 .source-view > .source-code-toolbar > * { display:block; }
 
 .image-view { 
-  overflow:scroll-indicator; 
+  /* overflow:scroll-indicator; */
+  overflow: auto;
   size:*;
   background:#fff;
   prototype: ImageViewer url(resources-view.tis);
@@ -484,7 +498,8 @@ widget.element-details > section:expanded > dl > dd
 .resources-view > .resource-list 
 { 
   prototype: ResourceList url(resource-list.tis);
-  overflow-y:scroll-indicator; 
+  /* overflow-y:scroll-indicator;  */
+  vertical-scrollbar: my-v-scrollbar;
   overflow-x:none;  
 }
 
@@ -493,7 +508,7 @@ widget.element-details > section:expanded > dl > dd
   visibility:none;
   margin:0;
   padding:0;
-  //background:window;
+  /* background:window; */
   background: @WINDOW-BACK-COLOR;
   color: @WINDOW-TEXT-COLOR;
 }
@@ -553,7 +568,7 @@ widget.element-details > section:expanded > dl > dd
 /*.resources-view > .debugger-area */
 
 .debugger-area { height:*; aspect: ScriptDebugger url(script-debugger.tis); }
-.debugger-area > div.sections { height:*; overflow:scroll-indicator; }
+.debugger-area > div.sections { height:*; /* overflow:scroll-indicator; */ vertical-scrollbar: my-v-scrollbar; }
 .debugger-area section { height:auto; }
 /*.debugger-area widget { size:*; background:window; height:max-content; }*/
 .debugger-area > .debugger-toolbar { flow:horizontal; padding:4dip; border-spacing:4dip; background: #eee; }
@@ -589,17 +604,18 @@ widget.element-details > section:expanded > dl > dd
 
 /*debugger-area > header { margin:0; height:auto; background:#DDD; padding: 2px 4px;  }*/
 
-widget.element-details > section.metrics { behavior:form; size:*;}
+widget.element-details > section.metrics { behavior:form; }
 widget.element-details > section.metrics div.box {
   flow:grid(1 1 1,
             2 5 3,
             4 4 4);
   width:max-content;
-  border: 1dip solid #777;
-}  
+  border: 2dip solid #777;
+  padding: 0;
+}
 
 widget.element-details > section.metrics > div.box {
-  margin:* * 0 *;
+  margin: 10dip *;
 }
 
 widget.element-details > section.metrics div.padding { background-color:#C3DEB7; }
@@ -616,18 +632,44 @@ widget.element-details > section.metrics div.box output {
 
 widget.element-details > section.metrics div.inner {
   width:max-content;
-  background-color:#FFF;
+  background-color:#fff;
   border: 1dip solid #777;
   white-space:nowrap;
   overflow:none;
   padding:4dip;
 }
 
-widget.element-details > section.metrics div.inner > output { font-weight:bold; display:inline-block; margin:0 4dip; min-width:max-content; }
+widget.element-details > section.metrics div.inner > output { font-weight:bold; display:inline-block; margin:0 2dip; min-width:max-content; }
 
 widget.element-details > section.metrics > dl.intrinsics { 
   flow:row(dt,dd,dt,dd);
-  margin:0 * * *; 
-} 
-widget.element-details > section.metrics > dl.intrinsics > dt { width:auto; max-width:auto; overflow:none; }
-widget.element-details > section.metrics > dl.intrinsics > dd { overflow:none; width:auto; max-width:auto; }
+  margin:5dip 0;
+  padding: 0 20%;
+}
+widget.element-details > section.metrics > dl.intrinsics > dt { width:auto; max-width:min-content; overflow:none; }
+/* widget.element-details > section.metrics > dl.intrinsics > dt { width:auto; max-width:auto; overflow:none; } */
+widget.element-details > section.metrics > dl.intrinsics > dd { overflow:none; width:auto; max-width:min-content; }
+/* widget.element-details > section.metrics > dl.intrinsics > dd { overflow:none; width:auto; max-width:auto; } */
+
+
+/* style block defining vertical scrollbar */
+@set my-v-scrollbar
+{
+  .prev { display:none; }
+  .next { display:none; }
+  
+  .base, .next-page, .prev-page {  }
+  
+  .slider    { background: rgba(29,29,29,0.3); border-radius:5dip; }
+ 
+  .base:disabled { background: rgba(255,0,0,0.2); }
+    
+  /* .slider:hover  { background: rgba(255,0,0,0.549); } */
+  .slider:hover  { background: rgba(29,29,29,0.8); }
+  
+  /* .slider:active { background: rgba(255,0,0,0.549); } */
+  .slider:active { background: rgba(29,29,29,1); }
+  
+  .base { width: 6dip; } /* explicit declaration of its width */
+  .corner { background: transparent; }
+}

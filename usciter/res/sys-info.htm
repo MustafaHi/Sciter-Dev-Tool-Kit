@@ -2,14 +2,14 @@
 <head>
   <title></title>
   <style>
-
-
-      html { background:url(starfield.webp) no-repeat 50% 50%;
+    * { padding: 0; margin: 0; }
+      html { 
+        /* background:url(starfield.webp) no-repeat 50% 50%; */
              background-size:cover;
              overflow:hidden;  }
     
       body { font:system; margin:0; padding:8dip;
-             //background: radial-gradient(90% 90%, circle farthest-side, #FFF, #FFDEAD/25%, #840/40%, rgba(128,64,0,0)); 
+             background: radial-gradient( circle farthest-corner at -4% -12.9%,  rgba(74,98,110,1) 0.3%, rgba(30,33,48,1) 90.2% );
            }
 
       a:link { color:#048; behavior:clickable; }
@@ -17,8 +17,7 @@
       div#intro
       { 
         color:#bbb;
-        padding:3dip; 
-        margin-bottom:*;
+        padding:5dip 3dip; 
         behavior:htmlarea;
         background: rgba(0,0,0,0.5);
         width:max-content;
@@ -75,18 +74,54 @@
       section#info:hover {
         background-color:rgba(200,200,200,0.75);
         size:max-content;
-        transition: size(sine-out,400ms,100ms) background-color(sine-out,400ms);
+        transition: size(sine-out,100ms,100ms) background-color(sine-out,100ms);
       }
 
+      .bookmark {
+        background:#ddd;
+        border-radius: 4dip;
+        margin-top: 10dip;
+        margin-bottom: 10dip;
+        padding: 10dip;
+        height: *;
+        width: *;
+      }
+      .bookmark h2 { margin-bottom: 10dip; }
+      .mark {
+        margin-top: 5dip;
+        background: #eee;
+        padding: 10dip;
+        border-radius: 5dip;
+        cursor: pointer;
+        flow:horizontal;
+      }
+      .mark:hover { background: rgba(0,0,0,0.137); }
+      .mark p:first-child { margin-right: 10dip; width: 5*; }
+      .mark p:last-child { color: #888; width: 5*; }
+
+      #link {
+        padding: 1em;
+        font-size: 1.2em;
+        font-weight: 700;
+        width: max-content;
+      }
   </style>
 
   <script type="text/tiscript">
-
+    const path = System.path(#USER_APPDATA, "SDTK" + ".json");
+    var stream = Stream.openFile(path,"ur");
+    var data = parseData(stream);
+    stream.close();
+    $(#bookmark).$content();
+    for (var e in data.history) {
+      $(#bookmark).$append(<div.mark><p>{e.title}</p><p>{e.path}</p></div>);
+    }
+    event click $(.mark) { loadFile("file://" + this.$(p:last-child).value); }
     function self.ready() {
-      $(#version).text = String.printf("%d.%d.%d.%d", 
+      $(#version).text = String.printf("%d.%d.%d.%d",
   		  (Sciter.VERSION >> 16) & 0xffff, Sciter.VERSION & 0xffff,
   		  (Sciter.REVISION >> 16) & 0xffff, Sciter.REVISION & 0xffff);
-      $(#revision).text = Sciter.BUILD.toString();      
+      $(#revision).text = Sciter.BUILD.toString();
   	  $(#user).text = Sciter.userName();
   	  $(#machine).text = Sciter.machineName();
   	  $(#domain).text = Sciter.machineName(true);
@@ -108,6 +143,12 @@
 <body>
   <div #intro><img #arrow> use this button to open HTML files...</div>
 
+  <section.bookmark>
+    <h2>Recently opened projects</h2>
+    <div#bookmark>
+    </div>
+  </section>
+
   <section.info #info>
     <ul>
       <header>Sciter Engine contains:</header>  
@@ -118,7 +159,10 @@
       <li><a href="https://github.com/libuv/libuv">libuv</a> multi-platform asynchronous I/O library.</li>
     </ul>
   </section>
-
+  <div.info #link>
+    <p>Sciter Development Tool Kit v1.0</p>
+    <p><a href="https://github.com/MustafaHi/Sciter-Dev-Tool-Kit">https://github.com/MustafaHi/Sciter-Dev-Tool-Kit</a></p>
+  </div>
   <dl.info #system>
 	  <header#sciter>The Sciter</header>
 	  <dt>version:</dt>	   <dd #version></dd>
