@@ -31,7 +31,6 @@ body
 { 
   padding:0; margin:0; 
   flow: vertical;
-  /*background: #fff;*/
 }
 
 body > main { display:block; size:*; background:#fff; }
@@ -181,7 +180,9 @@ ul.dom-element-path
   padding:0 0 0 4dip; margin:0;
   font:system;
   flow:horizontal;
-  overflow-x:scroll-indicator;
+  /* overflow-x:scroll-indicator; */
+  overflow-x: auto;
+  horizontal-scrollbar: my-v-scrollbar;
 }
 ul.dom-element-path > text { color:#aaa; }
 ul.dom-element-path > li {
@@ -211,6 +212,7 @@ text.resource-url {
   text-align:center;
   overflow-x:hidden;
   text-overflow:ellipsis;
+  /* vertical-scrollbar: my-v-scrollbar; */
 }
 
 
@@ -219,7 +221,8 @@ select.log {
   prototype: Log url(log.tis);  
   display:block; 
   padding:0; 
-  padding-bottom: 26dip;
+  padding-bottom: 20dip;
+  margin-bottom: 30dip;
   /* overflow-x:scroll-indicator;  */
   overflow-x: auto;
   context-menu: selector(menu#for-log-list);
@@ -279,6 +282,7 @@ select.log > option.current-view { border-right-color: highlight; }
   line-height: 1.3em;
   white-space :pre;
   font-family:monospace;
+  font-size: 1.2em;
   border:none;
   border-top: 1dip solid #eee;
   border-radius: 0;
@@ -437,10 +441,6 @@ widget.element-details > section:expanded > dl > dd
   margin:0;
   padding:2dip 3dip;
   font-weight:bold;
-  //white-space:nowrap;
-  //max-width:300dip;
-  //overflow-x:hidden;
-  //text-overflow:ellipsis;
 }
 
 /* resources view content */ 
@@ -571,7 +571,7 @@ widget.element-details > section:expanded > dl > dd
 .debugger-area > div.sections { height:*; /* overflow:scroll-indicator; */ vertical-scrollbar: my-v-scrollbar; }
 .debugger-area section { height:auto; }
 /*.debugger-area widget { size:*; background:window; height:max-content; }*/
-.debugger-area > .debugger-toolbar { flow:horizontal; padding:4dip; border-spacing:4dip; background: #eee; }
+.debugger-area > .debugger-toolbar { flow:horizontal; padding:4dip; border-spacing:4dip; background: #fff; }
 .debugger-area > .debugger-toolbar > button { display:block; width:*; min-width:2em; max-width:auto; overflow-x:hidden;  }
 .debugger-area > .debugger-toolbar:not(:disabled) { background:red; }
 
@@ -584,7 +584,7 @@ widget.element-details > section:expanded > dl > dd
 .debugger-area section span.file { display:block; font-weight:bold; }
 .debugger-area section span.funcName { display:block; font-weight:bold; margin-right:8dip; }
 
-.debugger-area section > header { background: #eee; color:black; padding:2dip 4dip; }
+.debugger-area section > header { background: #eee; color:black; padding:5dip; }
 
 /*.debugger-area dl { flow: row(dt,dd); border-spacing:2dip; margin:0; padding:0;}
 .debugger-area dl > dt { text-align:right; font-weight:bold; width:max-content; white-space:nowrap; }
@@ -670,6 +670,6 @@ widget.element-details > section.metrics > dl.intrinsics > dd { overflow:none; w
   /* .slider:active { background: rgba(255,0,0,0.549); } */
   .slider:active { background: rgba(29,29,29,1); }
   
-  .base { width: 6dip; } /* explicit declaration of its width */
+  .base { width: 6dip; height: 5dip; } /* explicit declaration of its width */
   .corner { background: transparent; }
 }

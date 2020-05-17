@@ -107,7 +107,23 @@
       }
   </style>
 
-  <script type="text/tiscript">
+<script type="text/tiscript">
+  function self.ready() {
+    $(#version).text = String.printf("%d.%d.%d.%d",
+    (Sciter.VERSION >> 16) & 0xffff, Sciter.VERSION & 0xffff,
+    (Sciter.REVISION >> 16) & 0xffff, Sciter.REVISION & 0xffff);
+    $(#revision).text = Sciter.BUILD.toString();
+    $(#user).text = Sciter.userName();
+    $(#machine).text = Sciter.machineName();
+    $(#domain).text = Sciter.machineName(true);
+    //$(#home).text = System.home();
+    $(#language).text = System.language;
+    $(#country).text = System.country;
+    $(#os-type).text = System.HANDHELD_OS? "handheld":"desktop";
+    $(#os-version).text = System.OS;
+    $(#gfx-backend).text = view.backendName;
+    $(#sqlite-version).text = SQLite.version;
+    
     const path = System.path(#USER_APPDATA, "SDTK" + ".json");
     var stream = Stream.openFile(path,"ur");
     var data = parseData(stream);
@@ -116,29 +132,15 @@
     for (var e in data.history) {
       $(#bookmark).$append(<div.mark><p>{e.title}</p><p>{e.path}</p></div>);
     }
-    event click $(.mark) { loadFile("file://" + this.$(p:last-child).value); }
-    function self.ready() {
-      $(#version).text = String.printf("%d.%d.%d.%d",
-  		  (Sciter.VERSION >> 16) & 0xffff, Sciter.VERSION & 0xffff,
-  		  (Sciter.REVISION >> 16) & 0xffff, Sciter.REVISION & 0xffff);
-      $(#revision).text = Sciter.BUILD.toString();
-  	  $(#user).text = Sciter.userName();
-  	  $(#machine).text = Sciter.machineName();
-  	  $(#domain).text = Sciter.machineName(true);
-  	  //$(#home).text = System.home();
-  	  $(#language).text = System.language;
-  	  $(#country).text = System.country;
-  	  $(#os-type).text = System.HANDHELD_OS? "handheld":"desktop";
-  	  $(#os-version).text = System.OS;
-      $(#gfx-backend).text = view.backendName;
-    }
-
-    event click $(a[href]) {
-      Sciter.launch(this.attributes["href"]);
-      return true;
-    }
+  }
+    
+  event click $(.mark) { loadFile("file://" + this.$(p:last-child).value); }
+  event click $(a[href]) {
+    Sciter.launch(this.attributes["href"]);
+    return true;
+  }
   
-  </script>
+</script>
 </head>
 <body>
   <div #intro><img #arrow> use this button to open HTML files...</div>
@@ -160,13 +162,15 @@
     </ul>
   </section>
   <div.info #link>
-    <p>Sciter Development Tool Kit v1.0</p>
+    <p>Sciter Developer Tool Kit v1.5</p>
     <p><a href="https://github.com/MustafaHi/Sciter-Dev-Tool-Kit">https://github.com/MustafaHi/Sciter-Dev-Tool-Kit</a></p>
   </div>
   <dl.info #system>
 	  <header#sciter>The Sciter</header>
 	  <dt>version:</dt>	   <dd #version></dd>
     <dt>revision:</dt>   <dd #revision></dd>
+    <header>SQLite</header>
+    <dt>version:</dt>    <dd #sqlite-version></dd>
     <header>System</header>
 	  <dt>OS type:</dt>	   <dd #os-type></dd>
 	  <dt>OS version:</dt> <dd #os-version></dd>

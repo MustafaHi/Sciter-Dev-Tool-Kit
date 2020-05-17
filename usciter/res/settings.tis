@@ -2,11 +2,12 @@ function initFiles(force = 0) {
   const path = System.path(#USER_APPDATA, "SDTK.json");
   if (!System.scanFiles(path) || force == 1) {
       var sett = {
-          window : {left:"100",top:"100",width:"800",height:"600"},
+          window : {left:100,top:100,width:800,height:600},
           history: []
       };
       var intie = Stream.openFile(path, "wu");
-      intie.printf("%s", JSON.stringify(sett, ""));
+      // intie.printf("%V", JSON.stringify(sett, ""));
+      intie.printf("%V", sett);
       intie.close();
   }
 }
