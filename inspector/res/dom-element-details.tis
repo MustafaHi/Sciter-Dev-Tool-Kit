@@ -52,41 +52,40 @@ class ElementDetails : Element
     props_names.sort();
 
     if(props) {
-      var padding = [props["padding-top"], props["padding-right"], props["padding-bottom"], props["padding-left"]];
-      debug: padding;
-      if ((props["padding-top"] && props["padding-right"] && props["padding-bottom"] && props["padding-left"]) !== undefined) {
-        usedStylesList.$append(<dt>Padding :</dt><dd>{ props["padding-top"].toCssString() } | {props["padding-right"].toCssString()} | {props["padding-bottom"].toCssString()} | {props["padding-left"].toCssString()}</dd>);
+      if (props["padding-top"] || props["padding-right"] || props["padding-bottom"] || props["padding-left"]) {
+        usedStylesList.$append(<dt>Padding :</dt><dd>{ props["padding-top"]?.toCssString() || "-" } | {props["padding-right"]?.toCssString() || "-"} | {props["padding-bottom"]?.toCssString() || "-"} | {props["padding-left"]?.toCssString() || "-"}</dd>);
+        // usedStylesList.$append(<dt>Padding :</dt><dd></dd>);
       }
-      if ((props["margin-top"] && props["margin-right"] && props["margin-bottom"] && props["margin-left"]) !== undefined) {
-        usedStylesList.$append(<dt>Margin :</dt><dd>{ props["margin-top"].toCssString() } | {props["margin-right"].toCssString()} | {props["margin-bottom"].toCssString()} | {props["margin-left"].toCssString()}</dd>);
+      if (props["margin-top"] || props["margin-right"] || props["margin-bottom"] || props["margin-left"]) {
+        usedStylesList.$append(<dt>Margin :</dt><dd>{ props["margin-top"]?.toCssString() || "-" } | {props["margin-right"]?.toCssString() || "-"} | {props["margin-bottom"]?.toCssString() || "-"} | {props["margin-left"]?.toCssString() || "-"}</dd>);
       }
-      if ((props["border-top-left-radius-x"] && props["border-top-left-radius-x"] && props["border-bottom-left-radius-x"] && props["border-bottom-left-radius-x"]) !== undefined) {
-        usedStylesList.$append(<dt>Border-radius :</dt><dd>{ props["border-top-left-radius-x"].toCssString() } | {props["border-top-right-radius-x"].toCssString()} | {props["border-bottom-right-radius-x"].toCssString()} | {props["border-bottom-left-radius-x"].toCssString()}</dd>);
+      if (props["border-top-left-radius-x"] || props["border-top-left-radius-x"] || props["border-bottom-left-radius-x"] || props["border-bottom-left-radius-x"]) {
+        usedStylesList.$append(<dt>Border-radius :</dt><dd>{ props["border-top-left-radius-x"]?.toCssString() || "-" } | {props["border-top-right-radius-x"]?.toCssString() || "-"} | {props["border-bottom-right-radius-x"]?.toCssString() || "-"} | {props["border-bottom-left-radius-x"]?.toCssString() || "-"}</dd>);
       }
-      if ((props["border-top-width"] && props["border-top-style"] && props["border-top-color"]) !== undefined) {
-        usedStylesList.$append(<dt>Border-top :</dt><dd>{ props["border-top-width"].toCssString() } {props["border-top-style"].toCssString()} <span style="color:{props["border-top-color"].toCssString()}">{props["border-top-color"].toCssString()}</span></dd>);
+      if (props["border-top-width"] || props["border-top-style"] || props["border-top-color"]) {
+        usedStylesList.$append(<dt>Border-top :</dt><dd>{ props["border-top-width"]?.toCssString() || "-" } {props["border-top-style"]?.toCssString() || "-"} <span style="color:{props["border-top-color"]?.toCssString() || "-"}">{props["border-top-color"]?.toCssString() || "-"}</span></dd>);
       }
-      if ((props["border-right-width"] && props["border-right-style"] && props["border-right-color"]) !== undefined) {
-        usedStylesList.$append(<dt>Border-right :</dt><dd>{ props["border-right-width"].toCssString() } {props["border-right-style"].toCssString()} <span style="color:{props["border-right-color"].toCssString()}">{props["border-right-color"].toCssString()}</span></dd>);
+      if (props["border-right-width"] || props["border-right-style"] || props["border-right-color"]) {
+        usedStylesList.$append(<dt>Border-right :</dt><dd>{ props["border-right-width"]?.toCssString() || "-" } {props["border-right-style"]?.toCssString() || "-"} <span style="color:{props["border-right-color"]?.toCssString() || "-"}">{props["border-right-color"]?.toCssString() || "-"}</span></dd>);
       }
-      if ((props["border-bottom-width"] && props["border-bottom-style"] && props["border-bottom-color"]) !== undefined) {
-        usedStylesList.$append(<dt>Border-bottom :</dt><dd>{ props["border-bottom-width"].toCssString() } {props["border-bottom-style"].toCssString()} <span style="color:{props["border-bottom-color"].toCssString()}">{props["border-bottom-color"].toCssString()}</span></dd>);
+      if (props["border-bottom-width"] || props["border-bottom-style"] || props["border-bottom-color"]) {
+        usedStylesList.$append(<dt>Border-bottom :</dt><dd>{ props["border-bottom-width"]?.toCssString() || "-" } {props["border-bottom-style"]?.toCssString() || "-"} <span style="color:{props["border-bottom-color"]?.toCssString() || "-"}">{props["border-bottom-color"]?.toCssString() || "-"}</span></dd>);
       }
-      if ((props["border-left-width"] && props["border-left-style"] && props["border-left-color"]) !== undefined) {
-        usedStylesList.$append(<dt>Border-left :</dt><dd>{ props["border-left-width"].toCssString() } {props["border-left-style"].toCssString()} <span style="color:{props["border-left-color"].toCssString()}">{props["border-left-color"].toCssString()}</span></dd>);
+      if (props["border-left-width"] || props["border-left-style"] || props["border-left-color"]) {
+        usedStylesList.$append(<dt>Border-left :</dt><dd>{ props["border-left-width"]?.toCssString() || "-" } {props["border-left-style"]?.toCssString() || "-"} <span style="color:{props["border-left-color"]?.toCssString() || "-"}">{props["border-left-color"]?.toCssString() || "-"}</span></dd>);
       }
-      if ((props["background-position-top"] && props["background-position-right"] && props["background-position-bottom"] && props["background-position-left"]) !== undefined) {
-        usedStylesList.$append(<dt>Background-position :</dt><dd>{ props["background-position-top"].toCssString() } | {props["background-position-right"].toCssString()} | {props["background-position-bottom"].toCssString()} | {props["background-position-left"].toCssString()}</dd>);
+      if (props["background-position-top"] || props["background-position-right"] || props["background-position-bottom"] || props["background-position-left"]) {
+        usedStylesList.$append(<dt>Background-position :</dt><dd>{ props["background-position-top"]?.toCssString() || "-" } | {props["background-position-right"]?.toCssString() || "-"} | {props["background-position-bottom"]?.toCssString() || "-"} | {props["background-position-left"]?.toCssString() || "-"}</dd>);
       }
-      if ((props["foreground-position-top"] && props["foreground-position-right"] && props["foreground-position-bottom"] && props["foreground-position-left"]) !== undefined) {
-        usedStylesList.$append(<dt>Foreground-position :</dt><dd>{ props["foreground-position-top"].toCssString() } | {props["foreground-position-right"].toCssString()} | {props["foreground-position-bottom"].toCssString()} | {props["foreground-position-left"].toCssString()}</dd>);
+      if (props["foreground-position-top"] || props["foreground-position-right"] || props["foreground-position-bottom"] || props["foreground-position-left"]) {
+        usedStylesList.$append(<dt>Foreground-position :</dt><dd>{ props["foreground-position-top"]?.toCssString() || "-" } | {props["foreground-position-right"]?.toCssString() || "-"} | {props["foreground-position-bottom"]?.toCssString() || "-"} | {props["foreground-position-left"]?.toCssString() || "-"}</dd>);
       }
-      if (props["background-image"] !== undefined) {
-        if (props["background-image"][4] == ":") { usedStylesList.$append(<dt>Background-image</dt><dd><img src="{props["background-image"]}" style="max-width:40dip; fill:#777;"/></dd>); }
+      if (props["background-image"]) {
+        if (props["background-image"][4] == ":") { usedStylesList.$append(<dt>Background-image</dt><dd><img src="{props["background-image"]}" style="max-width:40dip; fill:#23292e;"/></dd>); }
         else { usedStylesList.$append(<dt>Background-image</dt><dd>{props["background-image"]}</dd>); }
       }
-      if (props["foreground-image"] !== undefined) {
-        if (props["foreground-image"][4] == ":") { usedStylesList.$append(<dt>Foreground-image</dt><dd><img src="{props["foreground-image"]}" style="max-width:40dip; fill:#777;"/></dd>); }
+      if (props["foreground-image"]) {
+        if (props["foreground-image"][4] == ":") { usedStylesList.$append(<dt>Foreground-image</dt><dd><img src="{props["foreground-image"]}" style="max-width:40dip; fill:#23292e;"/></dd>); }
         else { usedStylesList.$append(<dt>Foreground-image</dt><dd>{props["foreground-image"]}</dd>); }
       }
     }
@@ -96,9 +95,7 @@ class ElementDetails : Element
       if( prop_val !== undefined && prop_val !== null && NotToDisplay.indexOf(name) == -1 ) {
         if(name.indexOf("color") !== -1 || name.indexOf("fill") !== -1 || name.indexOf("stroke") !== -1) {
           usedStylesList.$append(<dt>{name}:</dt><dd style="color: {prop_val.toCssString()}">{ prop_val.toCssString() }</dd>);
-        } else { usedStylesList.$append(<dt>{name}:</dt><dd>{ prop_val }</dd>); }
-        // } else { usedStylesList.$append(<dt>{name}:</dt><dd>{ prop_val.toCssString() }</dd>); }
-        // .toCssString() don't do shit
+        } else { usedStylesList.$append(<dt>{name}:</dt><dd>{ prop_val.toCssString() }</dd>); }
       }
     }
     usedStylesList.parent.attributes.toggleClass("no-items", props_names.length == 0);
@@ -117,6 +114,8 @@ class ElementDetails : Element
           var fn = (rule.file %~ "/") || rule.file;
           styleRulesList.$append(<header><span.selector>{rule.selector}</span><a href='{rule.file}' line={rule.lineNo} >{fn}({rule.lineNo})</a></header>); 
         }
+        else if(rule.type == "default-style")
+          styleRulesList.$append(<header><span.selector>intrinsic</span></header>); 
         else if(rule.type == "inline-style")
           styleRulesList.$append(<header><span.selector>@style:</span></header>); 
         else if(rule.type == "runtime-style")
@@ -127,54 +126,54 @@ class ElementDetails : Element
         for(var name in props) props_names.push(name);
         props_names.sort();
 
-        if(props) {
-          if ((props["padding-top"] && props["padding-right"] && props["padding-bottom"] && props["padding-left"]) !== undefined) {
-            styleRulesList.$append(<dt>Padding :</dt><dd>{ props["padding-top"].toCssString() } | {props["padding-right"].toCssString()} | {props["padding-bottom"].toCssString()} | {props["padding-left"].toCssString()}</dd>);
-          }
-          if ((props["margin-top"] && props["margin-right"] && props["margin-bottom"] && props["margin-left"]) !== undefined) {
-            styleRulesList.$append(<dt>Margin :</dt><dd>{ props["margin-top"].toCssString() } | {props["margin-right"].toCssString()} | {props["margin-bottom"].toCssString()} | {props["margin-left"].toCssString()}</dd>);
-          }
-          if ((props["border-top-left-radius-x"] && props["border-top-left-radius-x"] && props["border-bottom-left-radius-x"] && props["border-bottom-left-radius-x"]) !== undefined) {
-            styleRulesList.$append(<dt>Border-radius :</dt><dd>{ props["border-top-left-radius-x"].toCssString() } | {props["border-top-right-radius-x"].toCssString()} | {props["border-bottom-right-radius-x"].toCssString()} | {props["border-bottom-left-radius-x"].toCssString()}</dd>);
-          }
-          if ((props["border-top-width"] && props["border-top-style"] && props["border-top-color"]) !== undefined) {
-            styleRulesList.$append(<dt>Border-top :</dt><dd>{ props["border-top-width"].toCssString() } {props["border-top-style"].toCssString()} <span style="color:{props["border-top-color"].toCssString()}">{props["border-top-color"].toCssString()}</span></dd>);
-          }
-          if ((props["border-right-width"] && props["border-right-style"] && props["border-right-color"]) !== undefined) {
-            styleRulesList.$append(<dt>Border-right :</dt><dd>{ props["border-right-width"].toCssString() } {props["border-right-style"].toCssString()} <span style="color:{props["border-right-color"].toCssString()}">{props["border-right-color"].toCssString()}</span></dd>);
-          }
-          if ((props["border-bottom-width"] && props["border-bottom-style"] && props["border-bottom-color"]) !== undefined) {
-            styleRulesList.$append(<dt>Border-bottom :</dt><dd>{ props["border-bottom-width"].toCssString() } {props["border-bottom-style"].toCssString()} <span style="color:{props["border-bottom-color"].toCssString()}">{props["border-bottom-color"].toCssString()}</span></dd>);
-          }
-          if ((props["border-left-width"] && props["border-left-style"] && props["border-left-color"]) !== undefined) {
-            styleRulesList.$append(<dt>Border-left :</dt><dd>{ props["border-left-width"].toCssString() } {props["border-left-style"].toCssString()} <span style="color:{props["border-left-color"].toCssString()}">{props["border-left-color"].toCssString()}</span></dd>);
-          }
-          if ((props["background-position-top"] && props["background-position-right"] && props["background-position-bottom"] && props["background-position-left"]) !== undefined) {
-            styleRulesList.$append(<dt>Background-position :</dt><dd>{ props["background-position-top"].toCssString() } | {props["background-position-right"].toCssString()} | {props["background-position-bottom"].toCssString()} | {props["background-position-left"].toCssString()}</dd>);
-          }
-          if ((props["foreground-position-top"] && props["foreground-position-right"] && props["foreground-position-bottom"] && props["foreground-position-left"]) !== undefined) {
-            usedStylesList.$append(<dt>Foreground-position :</dt><dd>{ props["foreground-position-top"].toCssString() } | {props["foreground-position-right"].toCssString()} | {props["foreground-position-bottom"].toCssString()} | {props["foreground-position-left"].toCssString()}</dd>);
-          }
-          if (props["background-image"] !== undefined) {
-            if (props["background-image"][4] == ":") { styleRulesList.$append(<dt>Background-image</dt><dd><img src="{props["background-image"]}" style="max-width:40dip; fill:#777;"/></dd>); }
-            else { styleRulesList.$append(<dt>Background-image</dt><dd>{props["background-image"]}</dd>); }
-          }
-          if (props["foreground-image"] !== undefined) {
-            if (props["foreground-image"][4] == ":") { styleRulesList.$append(<dt>Foreground-image</dt><dd><img src="{props["foreground-image"]}" style="max-width:40dip; fill:#777;"/></dd>); }
-            else { styleRulesList.$append(<dt>Foreground-image</dt><dd>{props["foreground-image"]}</dd>); }
-          }
-        }
+        // if(props) {
+        //   if ((props["padding-top"] && props["padding-right"] && props["padding-bottom"] && props["padding-left"]) !== undefined) {
+        //     styleRulesList.$append(<dt>Padding :</dt><dd>{ props["padding-top"].toCssString() } | {props["padding-right"].toCssString()} | {props["padding-bottom"].toCssString()} | {props["padding-left"].toCssString()}</dd>);
+        //   }
+        //   if ((props["margin-top"] && props["margin-right"] && props["margin-bottom"] && props["margin-left"]) !== undefined) {
+        //     styleRulesList.$append(<dt>Margin :</dt><dd>{ props["margin-top"].toCssString() } | {props["margin-right"].toCssString()} | {props["margin-bottom"].toCssString()} | {props["margin-left"].toCssString()}</dd>);
+        //   }
+        //   if ((props["border-top-left-radius-x"] && props["border-top-left-radius-x"] && props["border-bottom-left-radius-x"] && props["border-bottom-left-radius-x"]) !== undefined) {
+        //     styleRulesList.$append(<dt>Border-radius :</dt><dd>{ props["border-top-left-radius-x"].toCssString() } | {props["border-top-right-radius-x"].toCssString()} | {props["border-bottom-right-radius-x"].toCssString()} | {props["border-bottom-left-radius-x"].toCssString()}</dd>);
+        //   }
+        //   if ((props["border-top-width"] && props["border-top-style"] && props["border-top-color"]) !== undefined) {
+        //     styleRulesList.$append(<dt>Border-top :</dt><dd>{ props["border-top-width"].toCssString() } {props["border-top-style"].toCssString()} <span style="color:{props["border-top-color"].toCssString()}">{props["border-top-color"].toCssString()}</span></dd>);
+        //   }
+        //   if ((props["border-right-width"] && props["border-right-style"] && props["border-right-color"]) !== undefined) {
+        //     styleRulesList.$append(<dt>Border-right :</dt><dd>{ props["border-right-width"].toCssString() } {props["border-right-style"].toCssString()} <span style="color:{props["border-right-color"].toCssString()}">{props["border-right-color"].toCssString()}</span></dd>);
+        //   }
+        //   if ((props["border-bottom-width"] && props["border-bottom-style"] && props["border-bottom-color"]) !== undefined) {
+        //     styleRulesList.$append(<dt>Border-bottom :</dt><dd>{ props["border-bottom-width"].toCssString() } {props["border-bottom-style"].toCssString()} <span style="color:{props["border-bottom-color"].toCssString()}">{props["border-bottom-color"].toCssString()}</span></dd>);
+        //   }
+        //   if ((props["border-left-width"] && props["border-left-style"] && props["border-left-color"]) !== undefined) {
+        //     styleRulesList.$append(<dt>Border-left :</dt><dd>{ props["border-left-width"].toCssString() } {props["border-left-style"].toCssString()} <span style="color:{props["border-left-color"].toCssString()}">{props["border-left-color"].toCssString()}</span></dd>);
+        //   }
+        //   if ((props["background-position-top"] && props["background-position-right"] && props["background-position-bottom"] && props["background-position-left"]) !== undefined) {
+        //     styleRulesList.$append(<dt>Background-position :</dt><dd>{ props["background-position-top"].toCssString() } | {props["background-position-right"].toCssString()} | {props["background-position-bottom"].toCssString()} | {props["background-position-left"].toCssString()}</dd>);
+        //   }
+        //   if ((props["foreground-position-top"] && props["foreground-position-right"] && props["foreground-position-bottom"] && props["foreground-position-left"]) !== undefined) {
+        //     usedStylesList.$append(<dt>Foreground-position :</dt><dd>{ props["foreground-position-top"].toCssString() } | {props["foreground-position-right"].toCssString()} | {props["foreground-position-bottom"].toCssString()} | {props["foreground-position-left"].toCssString()}</dd>);
+        //   }
+        //   if (props["background-image"] !== undefined) {
+        //     if (props["background-image"][4] == ":") { styleRulesList.$append(<dt>Background-image</dt><dd><img src="{props["background-image"]}" style="max-width:40dip; fill:#777;"/></dd>); }
+        //     else { styleRulesList.$append(<dt>Background-image</dt><dd>{props["background-image"]}</dd>); }
+        //   }
+        //   if (props["foreground-image"] !== undefined) {
+        //     if (props["foreground-image"][4] == ":") { styleRulesList.$append(<dt>Foreground-image</dt><dd><img src="{props["foreground-image"]}" style="max-width:40dip; fill:#777;"/></dd>); }
+        //     else { styleRulesList.$append(<dt>Foreground-image</dt><dd>{props["foreground-image"]}</dd>); }
+        //   }
+        // }
         
         for(var name in props_names) {
           var prop_val = props[name];
-          if( prop_val !== undefined && prop_val !== null && NotToDisplay.indexOf(name) == -1) {
+          // if( prop_val !== undefined && prop_val !== null && NotToDisplay.indexOf(name) == -1) {
+          if( prop_val !== undefined && prop_val !== null ) {
             if(typeof prop_val == #tuple && prop_val.tag == symbol("!important"))
               styleRulesList.$append(<dt>{name}:</dt><dd>{ prop_val[0].toCssString() } !important</dd>);
-            else if(name.indexOf("color") !== -1 || name.indexOf("fill") !== -1 || name.indexOf("stroke") !== -1) 
-              styleRulesList.$append(<dt>{name}:</dt><dd style="color:{prop_val.toCssString()}">{ prop_val.toCssString() }</dd>);
+            // else if(name.indexOf("color") !== -1 || name.indexOf("fill") !== -1 || name.indexOf("stroke") !== -1) 
+              // styleRulesList.$append(<dt>{name}:</dt><dd style="color:{prop_val.toCssString()}">{ prop_val.toCssString() }</dd>);
             else
-              styleRulesList.$append(<dt>{name}:</dt><dd>{ prop_val }</dd>);
-              // styleRulesList.$append(<dt>{name}:</dt><dd>{ prop_val.toCssString() }</dd>);
+              styleRulesList.$append(<dt>{name}:</dt><dd>{ prop_val.toCssString() }</dd>);
           }
         }
         ++cnt;
