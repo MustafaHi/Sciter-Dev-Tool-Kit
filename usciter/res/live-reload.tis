@@ -43,7 +43,7 @@ class LiveReload
 
   function scheduleReload() {
     view.root.postEvent("change-detected");
-    self.timer(2s, this.delayReload);
+    self.timer(1s, this.delayReload);
   }
 
   function addFile(url) {

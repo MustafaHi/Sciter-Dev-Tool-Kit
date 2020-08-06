@@ -492,7 +492,7 @@ widget.element-details > section:expanded > dl > dd
   flow:row(dt,dd); 
   margin:1em *;
 }
-.image-view > dl > dt {  max-width: max-content; }
+/* .image-view > dl > dt {  max-width: max-content; } */
 .image-view > dl > dd {  width: *; }
 
 .resources-view > .resource-list 

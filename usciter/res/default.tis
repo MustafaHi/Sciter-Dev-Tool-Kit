@@ -30,7 +30,7 @@ function loadFile(fn)
   var croot = content[0];
   var title = croot.$(head>title); 
   if(title) {
-    var t =  String.printf("uSDTK: %s", title.text);
+    var t =  String.printf("uSDTK: %s", title.text || "");
     view.windowCaption = t;
     if(var capEl = $(window-caption))
       capEl.text = t;
@@ -169,15 +169,16 @@ event click $(button#inspector)
   if( var connectToInspector = view.connectToInspector ) {
 
     const SUFFIX = { Windows: ".exe", OSX: ".app" };
+    const PREFIX = { Windows: "", OSX: "../../../" };
 
-    var inspectorPath = System.home("inspector" + (SUFFIX[System.PLATFORM] || ""));
+    var inspectorPath = System.home((PREFIX[System.PLATFORM] || "") + "inspector" + (SUFFIX[System.PLATFORM] || ""));
     // var inspectorPath = System.home("inspector.exe.lnk");
     if( !System.scanFiles(inspectorPath) ) {
       view.msgbox(#alert, "Cannot find " + inspectorPath);
       return;
     }
     Sciter.launch(inspectorPath);
-    self.timer(300ms, function() { connectToInspector($(frame#content)) });
+    self.timer(500ms, function() { connectToInspector($(frame#content)) });
   }
 }
 
