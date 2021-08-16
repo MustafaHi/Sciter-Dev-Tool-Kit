@@ -5,7 +5,7 @@ Brings quality-of-life improvements and fixes to [Sciter](https://sciter.com/)'s
 For more details check the links below :
 
 
-> Version : 1.8  
+> Version : 1.8.1  
 > [Binary Release](https://github.com/MustafaHi/Sciter-Dev-Tool-Kit/releases)  
 > [Change Log & Features](https://github.com/MustafaHi/Sciter-Dev-Tool-Kit/wiki/Change-log-&-Features)  
 > [Dev Guide](https://github.com/MustafaHi/Sciter-Dev-Tool-Kit/wiki/Dev-Guide)  

@@ -161,7 +161,7 @@ class Log: Behavior
   {
     var text = "";
     for(var opt in this.$$(option:checked))
-      text += opt.attributes["msg"];
+      text += opt.attributes["msg"] || opt[0].text;
     view.clipboard(#put,text);
   }
   
